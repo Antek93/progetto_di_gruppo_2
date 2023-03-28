@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+
+//Models
+use App\Models\Store;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -34,16 +38,28 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'store_name' => ['required', 'string', 'max:128' ],
+            'address' => ['required', 'string', 'max:128'],
+            'description' => ['string'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            
         ]);
 
-        event(new Registered($user));
+        $store = Store::create([
+            'store_name' => $request->store_name,
+            'address' => $request->address,
+            'description' => $request->description,
+            'user_id' => $user->id,
+        ]);
 
+        $store->save();
+        event(new Registered($user));
+        
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
