@@ -40,7 +40,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'store_name' => ['required', 'string', 'max:128' ],
             'address' => ['required', 'string', 'max:128'],
-            'description' => ['string'],
         ]);
 
         $user = User::create([
@@ -53,11 +52,11 @@ class RegisteredUserController extends Controller
         $store = Store::create([
             'store_name' => $request->store_name,
             'address' => $request->address,
-            'description' => $request->description,
             'user_id' => $user->id,
         ]);
 
         $store->save();
+        
         event(new Registered($user));
         
         Auth::login($user);

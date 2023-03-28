@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('store_name',128);
             $table->string('address', 128);
-            $table->fullText('description')->nullable();
             $table->timestamps();
         });
     }
