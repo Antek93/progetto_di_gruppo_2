@@ -53,6 +53,11 @@
                                         <i class="fa-solid fa-tachometer-alt fa-lg fa-fw"></i> Dashboard
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.store.index' ? 'bg-secondary' : '' }}" href="{{route('admin.store.index')}}">
+                                        <i class="fa-solid fa-tachometer-alt fa-lg fa-fw"></i> My Store
+                                    </a>
+                                </li>
                             </ul>
 
 

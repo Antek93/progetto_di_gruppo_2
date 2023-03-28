@@ -1,10 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
+use App\Http\Controllers\Controller;
 
 use App\Models\Store;
 use App\Http\Requests\StoreStoreRequest;
+
 use App\Http\Requests\UpdateStoreRequest;
+
+// Helpers
+use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
@@ -15,7 +20,10 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $store = $user->store;
+
+        return view('admin.stores.index', compact('store'));
     }
 
     /**
